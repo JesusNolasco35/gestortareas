@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+import GestorTareas
 
 app = Flask(__name__)
 
@@ -10,9 +11,27 @@ def index():
 def registro():
     return render_template('registro.html')
 
+
+
+
+
 @app.route('/inicio', methods=['GET', 'POST'])
 def inicio():
-    return render_template('inicio.html')
+    gestor = GestorTareas ()
+    if gestor:
+        if gestor.obtener_usuario2("hola@gmail.com", "1234")
+            return render_template('inicio.html')
+        else:
+            pass
+    
+    
+    else:
+        render render_template('errorConeccion')
+
+
+
+
+
 
 @app.route('/recuperar', methods=['GET', 'POST'])
 def recuperar():

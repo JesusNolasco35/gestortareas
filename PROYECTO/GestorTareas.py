@@ -54,7 +54,7 @@ class GestorTareas:
             return None
     
     
-        def obtener_usuario2(self, email: str, pass: str) -> Optional[Dict]:
+    def obtener_usuario2(self, email: str, pass1: str) -> Optional[Dict]:
         try:
             email = self.usuarios.find_one({"email": ObjectId(email)})
             if correo:

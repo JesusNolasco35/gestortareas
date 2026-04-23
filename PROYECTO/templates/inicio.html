@@ -10,14 +10,14 @@
                 <h3 class="mb-0">Iniciar Sesión</h3>
             </div>
             <div class="card-body">
-                <form>
+                <form method="POST" action="/inicio">
                     <div class="mb-3">
                         <label class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" placeholder="usuario@ejemplo.com">
+                        <input type="email" name="email" class="form-control" placeholder="usuario@ejemplo.com" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" placeholder="">
+                        <input type="password" name="password" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Ingresar</button>
                 </form>

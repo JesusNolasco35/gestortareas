@@ -10,24 +10,24 @@
                 <h3 class="mb-0">Crear Cuenta</h3>
             </div>
             <div class="card-body">
-                <form>
+                <form method="POST" action="/registro">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nombre</label>
-                            <input type="text" class="form-control" placeholder="Juan">
+                            <input type="text" name="first_name" class="form-control" placeholder="Juan" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Apellido</label>
-                            <input type="text" class="form-control" placeholder="Treviño">
+                            <input type="text" name="last_name" class="form-control" placeholder="Pérez" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" placeholder="usuario@ejemplo.com">
+                        <input type="email" name="email" class="form-control" placeholder="usuario@ejemplo.com" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" placeholder="••••••">
+                        <input type="password" name="password" class="form-control" placeholder="••••••" required>
                     </div>
                     <button type="submit" class="btn btn-success w-100">Registrarse</button>
                 </form>

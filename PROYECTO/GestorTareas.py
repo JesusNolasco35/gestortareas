@@ -56,14 +56,16 @@ class GestorTareas:
     
     def obtener_usuario2(self, email: str, pass1: str) -> Optional[Dict]:
         try:
-            email = self.usuarios.find_one({"email": ObjectId(email)})
-            if correo:
+            usuario = self.usuarios.find_one({"email": email})
+            if usuario and usuario['password'] == pass1:
                 usuario['_id'] = str(usuario['_id'])
-            return usuario
+                return usuario
+            return None
         except Exception as e:
             print(f"Error al obtener usuario: {e}")
-            return None
-    
+        return None
+
+
     def crear_tarea(self, usuario_id: str, titulo: str, descripcion: str = "", 
                     fecha_limite: Optional[datetime] = None) -> Optional[str]:
         """Crear una nueva tarea para un usuario"""

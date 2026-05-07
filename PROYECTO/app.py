@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from GestorTareas import GestorTareas
+from bson import ObjectId
 
 app = Flask(__name__)
 app.secret_key = '12345678'
@@ -68,7 +69,71 @@ def tareas():
     if 'user_id' not in session:
         flash('Debes iniciar sesión primero')
         return redirect(url_for('inicio'))
-    return render_template('tareas.html')
+    
+    # Obtener tareas del usuario actual
+    usuario_id = session['user_id']
+    tareas_lista = gestor.obtener_tareas_usuario(usuario_id)
+    
+    return render_template('tareas.html', tareas=tareas_lista)
+
+@app.route('/agregar_tarea', methods=['POST'])
+def agregar_tarea():
+    if 'user_id' not in session:
+        flash('Debes iniciar sesión primero')
+        return redirect(url_for('inicio'))
+    
+    titulo = request.form.get('titulo')
+    descripcion = request.form.get('descripcion', '')
+    
+    if not titulo:
+        flash('El título es obligatorio')
+        return redirect(url_for('tareas'))
+    
+    usuario_id = session['user_id']
+    gestor.crear_tarea(usuario_id, titulo, descripcion)
+    flash('✅ Tarea agregada exitosamente')
+    return redirect(url_for('tareas'))
+
+@app.route('/completar_tarea/<tarea_id>')
+def completar_tarea(tarea_id):
+    if 'user_id' not in session:
+        return redirect(url_for('inicio'))
+    
+    usuario_id = session['user_id']
+    
+    gestor.tareas.update_one(
+        {"_id": ObjectId(tarea_id), "usuario_id": ObjectId(usuario_id)},
+        {"$set": {"completada": True, "estado": "completada"}}
+    )
+    flash('🎉 ¡Tarea completada!')
+    return redirect(url_for('tareas'))
+
+@app.route('/editar_tarea/<tarea_id>', methods=['POST'])
+def editar_tarea(tarea_id):
+    if 'user_id' not in session:
+        return redirect(url_for('inicio'))
+    
+    usuario_id = session['user_id']
+    titulo = request.form.get('titulo')
+    descripcion = request.form.get('descripcion')
+    
+    gestor.tareas.update_one(
+        {"_id": ObjectId(tarea_id), "usuario_id": ObjectId(usuario_id)},
+        {"$set": {"titulo": titulo, "descripcion": descripcion}}
+    )
+    flash('✏️ Tarea editada exitosamente')
+    return redirect(url_for('tareas'))
+
+@app.route('/eliminar_tarea/<tarea_id>')
+def eliminar_tarea(tarea_id):
+    if 'user_id' not in session:
+        return redirect(url_for('inicio'))
+    
+    usuario_id = session['user_id']
+    
+    gestor.tareas.delete_one({"_id": ObjectId(tarea_id), "usuario_id": ObjectId(usuario_id)})
+    flash('🗑️ Tarea eliminada')
+    return redirect(url_for('tareas'))
 
 @app.route('/logout')
 def logout():

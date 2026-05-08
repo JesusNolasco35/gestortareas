@@ -4,11 +4,10 @@
 
 {% block content %}
 <div class="row">
-    <!-- Columna del formulario para agregar tareas -->
     <div class="col-md-4">
         <div class="card">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">➕ Agregar Tarea</h4>
+                <h4 class="mb-0">Agregar Tarea</h4>
             </div>
             <div class="card-body">
                 <form method="POST" action="/agregar_tarea">
@@ -26,11 +25,10 @@
         </div>
     </div>
 
-    <!-- Columna de la lista de tareas -->
     <div class="col-md-8">
         <div class="card">
             <div class="card-header bg-success text-white">
-                <h4 class="mb-0">📋 Lista de Tareas</h4>
+                <h4 class="mb-0">Lista de Tareas</h4>
             </div>
             <div class="card-body">
                 {% if tareas %}
@@ -57,7 +55,7 @@
                                 <td>{{ tarea.descripcion[:50] }}{% if tarea.descripcion|length > 50 %}...{% endif %}</td>
                                 <td>
                                     {% if tarea.completada %}
-                                        <span class="badge bg-success">✅ Completada</span>
+                                        <span class="badge bg-success">Completada</span>
                                     {% else %}
                                         <span class="badge bg-warning">⏳ Pendiente</span>
                                     {% endif %}
@@ -67,19 +65,17 @@
                                         {% if not tarea.completada %}
                                         <a href="/completar_tarea/{{ tarea._id }}" class="btn btn-success" title="Completar">✓</a>
                                         {% endif %}
-                                        <!-- Botón que abre el modal de editar -->
                                         <button type="button" class="btn btn-warning" title="Editar" 
                                                 data-bs-toggle="modal" 
                                                 data-bs-target="#modalEditar{{ tarea._id }}">
                                             ✏️
                                         </button>
                                         <a href="/eliminar_tarea/{{ tarea._id }}" class="btn btn-danger" title="Eliminar" 
-                                           onclick="return confirm('¿Estás seguro de eliminar esta tarea?')">🗑</a>
+                                            onclick="return confirm('¿Estás seguro de eliminar esta tarea?')">🗑</a>
                                     </div>
                                 </td>
                             </tr>
 
-                            <!-- MODAL PARA EDITAR (por cada tarea) -->
                             <div class="modal fade" id="modalEditar{{ tarea._id }}" tabindex="-1">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -112,7 +108,7 @@
                 </div>
                 {% else %}
                 <div class="alert alert-info text-center">
-                    <p class="mb-0">✨ No tienes tareas aún. ¡Crea tu primera tarea!</p>
+                    <p class="mb-0">No tienes tareas aún. ¡Crea tu primera tarea!</p>
                 </div>
                 {% endif %}
             </div>
